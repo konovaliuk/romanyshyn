@@ -1,0 +1,199 @@
+* {
+  box-sizing: border-box; }
+
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.hd {
+	z-index: -1;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-image: url(../img/main.jpg);
+}
+
+.heading {
+	text-align: center;
+	font-size: 45px;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	left: 50%;
+	top: 30%;
+}
+.btn.btn--big {
+	
+	color: #313131;
+	padding: 20px 20px;
+	position: absolute;
+	font-size: 30px;
+	font-weight: bold;
+	left: 50%;
+	top: 60%;
+	transform: translate(-50%, -50%);
+	border: 6px solid #02547e;
+	transition: .3s;
+}
+
+.btn.btn--big:hover {
+	background-color: rgba(0,0,0,.2);
+	transition: .3s;
+}
+
+#ua {
+}
+
+h1 {
+	text-align: right;
+	text-transform: uppercase;
+}
+
+form {
+	margin: 0 auto;
+}
+.form {
+	margin-top: 100px;
+	width: 300px;
+	justify-content: center;
+	display: flex;
+	flex-direction: column;
+}
+.row {
+	padding: 6px 0px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.nav {
+    font-size:0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.nav__link, .nav__link a {
+    display: inline-block;
+}
+.nav__link a {
+    transition: .2s;
+    font-size: 16px;
+    text-decoration:none;    
+    color: black;
+    border-top: 1px solid black;
+    padding: 10px 20px;
+    margin: 0 10px;
+}
+.menu {
+    text-align: center;
+}
+
+.nav__link a:hover {
+    color:#FFF;
+    background-color: black;
+}
+
+.page {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item {
+	font-size: 20px;
+    display:block;
+    width: 150px;
+    height: 150px;
+    border-bottom: 1px solid gray;
+    transition: 0.3s;
+    text-decoration: none;
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    line-height: 150px;
+}
+
+#active_link {
+	background-color: gray;
+	color: #FFF;
+}
+.item:nth-child(1) {
+	border-top: 1px solid black;
+}
+.item:hover {
+	background-color: gray;
+}
+
+.main {
+	margin: 10px 50px;
+    flex-grow: 2;
+}
+
+table {
+	width: 100%;
+}
+
+td {
+	border-bottom: 1px solid gray;
+}
+
+.object { 
+	width: 100%;
+	border: 1px solid gray;
+}
+
+.object__item {
+}
+
+.pending {
+	border-color: #ff8080;
+}
+
+.pending .btn {
+	background-color: #ff8080;
+}
+
+.active {
+	border-color: #01c6ff;
+}
+
+.active .btn{
+	background-color: #01c6ff;
+}
+
+.active:hover, .need:hover {
+	background-color: #5daaba;
+}
+
+.pending:hover, .wrecked:hover {
+	background-color: #ba5d5d;
+}
+
+.done {
+	border-color: #a7ff80;
+}
+
+.done .btn{
+	background-color: #a7ff80;
+}
+
+.done:hover, .good:hover {
+	background-color: #6fba5d;
+}
+
+.btn {
+	padding: 10px 15px;
+	color: black;
+	display: inline-block;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+.btn--nice:hover {
+	border-color: #3a7978;
+}
+.btn--nice {
+	border: 3px solid #5dbab9;
+	color: #3a7978;
+	border-radius: 5px;
+}
+
+/*# sourceMappingURL=main.css.map */

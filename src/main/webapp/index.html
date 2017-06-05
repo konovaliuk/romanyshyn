@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Kyiv AUTO base</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+</head>
+<body>
+    <section class="order">  
+      <form method="POST" action="" name="order-form">
+        <div class="form order-data">
+          <label for="place_from">From</label><input id="place_from" type="text" name="place_from"><br>
+          <label for="place_to">To</label><input id="place_to" type="text" name="place_to"><br>
+          <label for="cargo">Cargo</label><input id="cargo" type="checkbox" name="cargo"><br>
+          <label for="capacity">Capacity</label><input id="capacity" type="number" min="0" max="40" value="7" name="capacity"><br>
+        </div>
+        <div class="form personal-data">     
+          <label for="email">Email</label><input id="email" type="email" name="email"><br>
+          <label for="phone">Phone</label><input id="phone" type="text" name="phone" pattern="[0-9]+" required><br>
+          <label for="first_name">First name</label><input id="first_name" type="text" name="first_name"><br>
+          <label for="last_name">Last name</label><input id="last_name" type="text" name="last_name"><br>
+        </div>
+        <input type="submit" value="Make order">
+      </form>
+    </section>
+  </main>
+  <footer class="footer">
+    
+  </footer>
+</body>
+</html>
