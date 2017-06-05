@@ -8,6 +8,11 @@ import java.util.Map;
 import com.training.entities.RoleEnum;
 import com.training.properties.PagesProperties;
 
+/**
+* Class which handles user capabilities
+* (pages and commands)
+*
+*/
 public class PagesMapping {
 	public static final Map<String, List<String>> PAGES_MAP;
 	private static PagesProperties rb = PagesProperties.getInstance();

@@ -1,5 +1,6 @@
 package com.training.commands;
 
+
 public interface Pages {
 	public static final String CAR = "/jsp/car.jsp";
 	public static final String CARS = "/jsp/cars.jsp";
