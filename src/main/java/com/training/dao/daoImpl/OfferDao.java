@@ -148,6 +148,7 @@ public class OfferDao implements IOfferDao {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -163,6 +164,7 @@ public class OfferDao implements IOfferDao {
 			st.setInt(1, offer.getId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -185,6 +187,7 @@ public class OfferDao implements IOfferDao {
 			st.setInt(8, offer.getMaxPrice());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -205,7 +208,8 @@ public class OfferDao implements IOfferDao {
 			st.setInt(8, offer.getMaxPrice());
 			st.setBoolean(9, offer.isCargo());
 			st.setInt(10, offer.getId());
-			st.executeUpdate();
+			logger.info(st);
+			st.executeUpdate();			
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}

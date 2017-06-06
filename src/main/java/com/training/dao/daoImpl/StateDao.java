@@ -82,6 +82,7 @@ public class StateDao implements IStateDao {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -97,6 +98,7 @@ public class StateDao implements IStateDao {
 			st.setInt(1, state.getId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -112,6 +114,7 @@ public class StateDao implements IStateDao {
 			st.setString(1, state.getName());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -124,6 +127,7 @@ public class StateDao implements IStateDao {
 			PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_STATE);
 			st.setString(1, state.getName());
 			st.executeUpdate();
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}

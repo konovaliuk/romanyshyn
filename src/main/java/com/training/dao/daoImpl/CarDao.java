@@ -69,8 +69,7 @@ public class CarDao implements ICarDao {
 		List<Car> cars = new ArrayList<>();
 		try (Connection connection = ConnectionPool.getConnection();
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_FREE_CARS)) {
-			
+			ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_FREE_CARS)) {			
 			while (rs.next()) {
 				Car car = new Car();
 				int stateId= rs.getInt(CarCols.STATE_ID);

@@ -9,6 +9,8 @@ import static org.junit.Assert.*;
 import java.util.regex.Pattern;
 
 public class RegExpTest {
+	
+	@Test
 	public void testFirstNameNormal() {
         String input = "Alex";
         boolean isMatched;
@@ -32,6 +34,33 @@ public class RegExpTest {
         boolean isMatched;
         boolean expected = false;
         isMatched = Pattern.matches(RegExp.NAME_REGEXP, input);
+        assertEquals(isMatched, expected);
+    }
+    
+    @Test
+    public void testFirstNameCyrSymbols() {
+        String input = "¯ÿüó³";
+        boolean isMatched;
+        boolean expected = true;
+        isMatched = Pattern.matches(RegExp.NAME_REGEXP, input);
+        assertEquals(isMatched, expected);
+    }
+    
+    @Test
+    public void testFirstNameCyrOddSybolsSymbols() {
+        String input = "Ñåðã³é!";
+        boolean isMatched;
+        boolean expected = false;
+        isMatched = Pattern.matches(RegExp.NAME_REGEXP, input);
+        assertEquals(isMatched, expected);
+    }
+    
+    @Test
+    public void testPhoneValid() {
+        String input = "0933460203";
+        boolean isMatched;
+        boolean expected = false;
+        isMatched = Pattern.matches(RegExp.CELL_PHONE_REGEXP, input);
         assertEquals(isMatched, expected);
     }
 }

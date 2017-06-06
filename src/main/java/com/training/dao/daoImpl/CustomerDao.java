@@ -144,6 +144,7 @@ public class CustomerDao implements ICustomerDao {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -159,6 +160,7 @@ public class CustomerDao implements ICustomerDao {
 			st.setInt(1, customer.getId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -177,6 +179,7 @@ public class CustomerDao implements ICustomerDao {
 			st.setString(4, customer.getEmail());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -192,6 +195,7 @@ public class CustomerDao implements ICustomerDao {
 			st.setString(3, customer.getPhone());
 			st.setString(4, customer.getEmail());
 			st.setInt(5, customer.getId());
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());;
 		}

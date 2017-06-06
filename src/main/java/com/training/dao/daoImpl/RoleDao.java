@@ -118,6 +118,7 @@ public class RoleDao  implements IRoleDao {
 			st.setString(1, role.getName());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -128,7 +129,8 @@ public class RoleDao  implements IRoleDao {
 	public Role update(Role role) {
 		try (Connection connection = ConnectionPool.getConnection()) {
 			PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_ROLE);			
-			st.setString(1, role.getName());			
+			st.setString(1, role.getName());
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}

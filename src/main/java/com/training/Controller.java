@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import com.training.commands.ICommand;
 
 @WebServlet(
@@ -16,13 +18,11 @@ import com.training.commands.ICommand;
 		name = "Controller"
 		)
 public class Controller extends HttpServlet {
+	
+	private static Logger logger = Logger.getLogger(Controller.class);
 	private static final long serialVersionUID = 1L;
 	private ControllerHelper controllerHelper = ControllerHelper.getInstance();
        
-    /**
-     * 
-     * @see HttpServlet#HttpServlet()
-     */
     public Controller() {
         super();
     }
@@ -39,12 +39,12 @@ public class Controller extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response) {
 		String page = null;
 		ICommand command = controllerHelper.getCommand(request);
-		page = command.execute(request, response);
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 		try {
+			page = command.execute(request, response);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(page);
 			dispatcher.forward(request, response);
 		} catch (ServletException | IOException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage());
 		}
 		
 	}

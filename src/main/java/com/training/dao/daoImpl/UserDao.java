@@ -18,7 +18,7 @@ import com.training.pool.ConnectionPool;
 
 public class UserDao implements IUserDao {
 	
-	private static Logger logger = Logger.getLogger(StateDao.class);
+	private static Logger logger = Logger.getLogger(UserDao.class);
 	private static UserDao instance;
 	
 	private UserDao() {
@@ -35,9 +35,9 @@ public class UserDao implements IUserDao {
 	@Override
 	public List<User> findAll() {
 		List<User> users = new ArrayList<>();
-		try (Connection connection = ConnectionPool.getConnection()) {
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_USERS);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement st = connection.createStatement();
+				ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_USERS)) {
 			while (rs.next()) {
 				User user = new User();
 				int roleId = rs.getInt(UserCols.ROLE_ID);
@@ -65,9 +65,9 @@ public class UserDao implements IUserDao {
 	@Override
 	public List<User> findAllDrivers() {
 		List<User> users = new ArrayList<>();
-		try (Connection connection = ConnectionPool.getConnection()) {
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_DRIVERS);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement st = connection.createStatement();
+				ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_DRIVERS)) {
 			while (rs.next()) {
 				User user = new User();
 				int roleId = rs.getInt(UserCols.ROLE_ID);
@@ -95,9 +95,9 @@ public class UserDao implements IUserDao {
 	@Override
 	public List<User> findAllFreeDrivers() {
 		List<User> users = new ArrayList<>();
-		try (Connection connection = ConnectionPool.getConnection()) {
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_FREE_DRIVERS);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement st = connection.createStatement();
+				ResultSet rs = st.executeQuery(SQLQuery.SELECT_ALL_FREE_DRIVERS)) {
 			while (rs.next()) {
 				User user = new User();
 				int roleId = rs.getInt(UserCols.ROLE_ID);
@@ -125,8 +125,8 @@ public class UserDao implements IUserDao {
 	@Override
 	public User findEntityById(Integer id) {
 		User user = new User();
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_ID);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_ID)) {
 			st.setInt(1, id);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -154,8 +154,8 @@ public class UserDao implements IUserDao {
 	@Override
 	public User findEntityByLogin(String login) {
 		User user = new User();
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN)) {
 			st.setString(1, login);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
@@ -183,11 +183,12 @@ public class UserDao implements IUserDao {
 	public boolean delete(Integer id) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_USER);
+		try (Connection connection = ConnectionPool.getConnection(); 
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_USER)) {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -198,11 +199,12 @@ public class UserDao implements IUserDao {
 	public boolean delete(User user) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_USER);			
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_USER)) {			
 			st.setInt(1, user.getId());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -213,8 +215,8 @@ public class UserDao implements IUserDao {
 	public boolean create(User user) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_USER);			
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_USER)) {			
 			st.setString(1, user.getLogin());
 			st.setString(2, user.getLogin());
 			st.setString(3, user.getFirstName());
@@ -223,6 +225,7 @@ public class UserDao implements IUserDao {
 			st.setInt(6, user.getRoleId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
@@ -231,8 +234,8 @@ public class UserDao implements IUserDao {
 	
 	@Override
 	public User update(User user) {
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_USER);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_USER)) {
 			st.setString(1, user.getLogin());
 			st.setString(2, user.getPassword());
 			st.setString(3, user.getFirstName());
@@ -241,6 +244,7 @@ public class UserDao implements IUserDao {
 			st.setInt(6, user.getRoleId());
 			st.setInt(7, user.getId());
 			st.executeUpdate();
+			logger.info(st);
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
 		}
