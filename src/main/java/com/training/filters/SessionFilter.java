@@ -17,14 +17,18 @@ import com.training.PagesMapping;
 import com.training.entities.Role;
 import com.training.entities.RoleEnum;
 import com.training.entities.User;
-import com.training.properties.Properties;
+import com.training.properties.RequestParams;
 
 @WebFilter(urlPatterns = { "/Controller", "/jsp/*" })
-public class SessionFilter implements Filter{
+public class SessionFilter implements Filter {
+	
+	private static RequestParams rb = RequestParams.getInstance();
+	private static final String PAGE = rb.getProperty("page");
+	private static final String USER = rb.getProperty("user");
+	private static final String COMMAND = rb.getProperty("command");
 	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -36,15 +40,15 @@ public class SessionFilter implements Filter{
 		req.setCharacterEncoding("UTF-8");
 		res.setCharacterEncoding("UTF-8");
 		
-		String page = (String) req.getParameter("page");
-		String command = (String) req.getParameter("command");
-		User user = (User) req.getSession().getAttribute("user");
+		String page = (String) req.getParameter(PAGE);
+		String command = (String) req.getParameter(COMMAND);
+		User user = (User) req.getSession().getAttribute(USER);
 		if (user == null) {
 			user = new User();
 			Role role = new Role();
 			role.setName(RoleEnum.UNREGISTERED.name().toLowerCase());
 			user.setRole(role);
-			req.getSession().setAttribute("user", user);
+			req.getSession().setAttribute(USER, user);
 		}
 		page = page == null ? "null" : page;
 		command = command == null ? "null" : command;
@@ -60,7 +64,6 @@ public class SessionFilter implements Filter{
 	}
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
 		
 	}
 

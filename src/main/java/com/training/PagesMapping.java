@@ -11,6 +11,7 @@ import com.training.properties.PagesProperties;
 /**
 * Class which handles user capabilities
 * (pages and commands)
+* @author Olexandr
 *
 */
 public class PagesMapping {

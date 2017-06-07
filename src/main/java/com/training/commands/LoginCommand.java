@@ -21,15 +21,16 @@ public class LoginCommand implements ICommand {
 		String password = request.getParameter(PASSWORD);
 		User user = UserService.findUserByLogin(login);
 		if (user == null) {
-			return Pages.ERROR;
+			request.setAttribute("message", "login");
+			return Pages.LOGIN;
 		}
 		if (password.equals(user.getPassword())) {
 			page = Pages.MAIN;
 			HttpSession session = request.getSession(true);
 			session.setAttribute(USER, user);
 		} else {
-			request.setAttribute("error", "wrong password or login");
-			page = Pages.ERROR;
+			request.setAttribute("message", "login");
+			page = Pages.LOGIN;
 		}
 		return page;
 	}

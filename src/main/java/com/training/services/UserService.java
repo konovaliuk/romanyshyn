@@ -8,6 +8,7 @@ import java.util.Map;
 
 import com.training.dao.DaoFactory;
 import com.training.entities.Car;
+import com.training.entities.CarStateEnum;
 import com.training.entities.Offer;
 import com.training.entities.Role;
 import com.training.entities.User;
@@ -49,20 +50,20 @@ public class UserService {
 		}
 		for (User driver : drivers) {
 			Car car = driver.getCar();
+			if (car == null) {
+				continue;
+			}
 			if (offer.getPassangers() <= car.getCapacity()) {
 				if (offer.getMaxPrice() >= car.getPrice()) {
 					if (offer.isCargo() && !car.hasCargo()) {
 					} else {
-						appropDrivers.add(driver);
+						if (car.getState().getName().equalsIgnoreCase(CarStateEnum.GOOD.name())){
+							appropDrivers.add(driver);
+						}
 					}
-				} else {
-					System.out.println("price is not good");
-				}
-			} else {
-				System.out.println("cap is not good");
-			}
+				} 
+			} 
 		}
-		System.out.println(appropDrivers.size());
 		return appropDrivers;
 	}
 	

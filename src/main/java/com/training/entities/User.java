@@ -29,11 +29,12 @@ public class User implements Serializable {
 			return false;
 		}
 		User user = (User) object;
-		if (this.getFirstName().equals(user.getFirstName()) &&
-				this.getLastName().equals(user.getLastName()) &&
-				this.getLogin().equals(user.getLogin())) {
+		if (this.firstName.equals(user.firstName) &&
+				this.lastName.equals(user.lastName) &&
+				this.login.equals(user.login)) {
+			return true;
 		}
-		return true;
+		return false;
 	}
 	
 	@Override

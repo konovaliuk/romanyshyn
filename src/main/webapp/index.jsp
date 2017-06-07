@@ -8,7 +8,7 @@
 <fmt:setBundle basename="text" />
 <div class="main index">
 	<h1 class="heading"><fmt:message key="index.invitations" /></h1>
-	<a class="btn btn--big" href="#"><fmt:message key="index.page" /></a>
+	<a class="btn btn--big" href="${pageContext.request.contextPath}/Controller?page=customers_form"><fmt:message key="index.page" /></a>
 	
         </div>
   </div> <!-- end page class -->

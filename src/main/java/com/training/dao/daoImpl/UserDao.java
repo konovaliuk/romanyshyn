@@ -128,22 +128,23 @@ public class UserDao implements IUserDao {
 		try (Connection connection = ConnectionPool.getConnection();
 				PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_ID)) {
 			st.setInt(1, id);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				int roleId = rs.getInt(UserCols.ROLE_ID);
-				int carId = rs.getInt(UserCols.CAR_ID);
-				int userId = rs.getInt(UserCols.USER_ID);
-				String firstName = rs.getString(UserCols.FIRST_NAME);
-				String lastName = rs.getString(UserCols.LAST_NAME);
-				String login = rs.getString(UserCols.LOGIN);
-				String password = rs.getString(UserCols.PASSWORD);					
-				user.setCarId(carId);
-				user.setRoleId(roleId);
-				user.setId(userId);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
-				user.setLogin(login);
-				user.setPassword(password);
+			try (ResultSet rs = st.executeQuery()) {			
+				while (rs.next()) {
+					int roleId = rs.getInt(UserCols.ROLE_ID);
+					int carId = rs.getInt(UserCols.CAR_ID);
+					int userId = rs.getInt(UserCols.USER_ID);
+					String firstName = rs.getString(UserCols.FIRST_NAME);
+					String lastName = rs.getString(UserCols.LAST_NAME);
+					String login = rs.getString(UserCols.LOGIN);
+					String password = rs.getString(UserCols.PASSWORD);					
+					user.setCarId(carId);
+					user.setRoleId(roleId);
+					user.setId(userId);
+					user.setFirstName(firstName);
+					user.setLastName(lastName);
+					user.setLogin(login);
+					user.setPassword(password);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
@@ -156,22 +157,23 @@ public class UserDao implements IUserDao {
 		User user = new User();
 		try (Connection connection = ConnectionPool.getConnection();
 				PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_USER_BY_LOGIN)) {
-			st.setString(1, login);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				int roleId = rs.getInt(UserCols.ROLE_ID);
-				Integer carId = (Integer) rs.getObject(UserCols.CAR_ID);
-				int userId = rs.getInt(UserCols.USER_ID);
-				String firstName = rs.getString(UserCols.FIRST_NAME);
-				String lastName = rs.getString(UserCols.LAST_NAME);
-				String password = rs.getString(UserCols.PASSWORD);					
-				user.setCarId(carId);
-				user.setRoleId(roleId);
-				user.setId(userId);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
-				user.setLogin(login);
-				user.setPassword(password);
+			st.setString(1, login);			
+			try (ResultSet rs = st.executeQuery()) {
+				while (rs.next()) {
+					int roleId = rs.getInt(UserCols.ROLE_ID);
+					Integer carId = (Integer) rs.getObject(UserCols.CAR_ID);
+					int userId = rs.getInt(UserCols.USER_ID);
+					String firstName = rs.getString(UserCols.FIRST_NAME);
+					String lastName = rs.getString(UserCols.LAST_NAME);
+					String password = rs.getString(UserCols.PASSWORD);					
+					user.setCarId(carId);
+					user.setRoleId(roleId);
+					user.setId(userId);
+					user.setFirstName(firstName);
+					user.setLastName(lastName);
+					user.setLogin(login);
+					user.setPassword(password);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());

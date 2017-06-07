@@ -18,5 +18,5 @@ $(function(){
 		min = "0" + min;
 	}
 	time = year + "-" + month + "-" + date + "T" + hour + ":" + min;
-	$("#date").val(time);
+	$("#date").val(time).attr("min", time);
 }); 

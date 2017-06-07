@@ -85,9 +85,11 @@ public class CreateOfferCommand implements ICommand{
 		validator.setValidatorObject(new OfferValidator());
 		if (!validator.check(offer)) {
 			logger.error("Invalid customer data");
+			request.setAttribute("message", "hacker");
 			return Pages.INDEX;
 		}
 		OfferService.createOffer(offer);
+		request.setAttribute("message", "success");
 		return Pages.INDEX;
 	}
 	

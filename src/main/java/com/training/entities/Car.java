@@ -1,6 +1,10 @@
 package com.training.entities;
 
-public class Car {
+import java.io.Serializable;
+
+public class Car implements Serializable{
+	
+	private static final long serialVersionUID = -3963609849368438666L;
 	private Integer id;
 	private Integer stateId;
 	private State state;
@@ -11,6 +15,37 @@ public class Car {
 	
 	public Car() {
 		
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == null) {
+			return false;
+		} else if (object == this) {
+			return true;
+		}
+		if (!(object instanceof Car)) {
+			return false;
+		}
+		Car car = (Car) object;
+		if (this.state.equals(car.state) &&
+				this.mark.contentEquals(car.mark) &&
+				this.price.equals(car.price) &&
+				this.cargo == car.cargo &&
+				this.capacity.equals(car.capacity)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + state.hashCode();
+		hash = 31 * hash + mark.hashCode();
+		hash = 31 * hash + price.hashCode();
+		hash = 31 * hash + capacity.hashCode();
+		return hash;
 	}
 	
 	public boolean isCargo() {

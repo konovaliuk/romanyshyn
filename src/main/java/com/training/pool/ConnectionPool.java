@@ -11,6 +11,12 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
+/**
+ * Class that allows to use Tomcat connection pool
+ * 
+ * @author Olexandr
+ *
+ */
 public class ConnectionPool {
 	
 	private static final String DATASOURCE_NAME = "jdbc/car_base";

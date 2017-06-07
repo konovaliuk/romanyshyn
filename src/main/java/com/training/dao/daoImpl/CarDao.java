@@ -124,20 +124,21 @@ public class CarDao implements ICarDao {
 		try (Connection connection = ConnectionPool.getConnection();
 			PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_CAR_BY_ID)) {
 			st.setObject(1, id);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				int stateId= rs.getInt(CarCols.STATE_ID);
-				int capacity = rs.getInt(CarCols.CAPACITY);
-				int carId = rs.getInt(CarCols.CAR_ID);
-				int price = rs.getInt(CarCols.PRICE);
-				boolean cargo = (rs.getInt(CarCols.CARGO) > 0) ? true : false;
-				String mark = rs.getString(CarCols.MARK);
-				car.setCapacity(capacity);
-				car.setCargo(cargo);
-				car.setMark(mark);
-				car.setPrice(price);
-				car.setStateId(stateId);
-				car.setId(carId);
+			try (ResultSet rs = st.executeQuery()) {
+				while (rs.next()) {
+					int stateId= rs.getInt(CarCols.STATE_ID);
+					int capacity = rs.getInt(CarCols.CAPACITY);
+					int carId = rs.getInt(CarCols.CAR_ID);
+					int price = rs.getInt(CarCols.PRICE);
+					boolean cargo = (rs.getInt(CarCols.CARGO) > 0) ? true : false;
+					String mark = rs.getString(CarCols.MARK);
+					car.setCapacity(capacity);
+					car.setCargo(cargo);
+					car.setMark(mark);
+					car.setPrice(price);
+					car.setStateId(stateId);
+					car.setId(carId);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());

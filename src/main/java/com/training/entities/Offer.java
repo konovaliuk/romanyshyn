@@ -1,9 +1,11 @@
 package com.training.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Offer{
+public class Offer implements Serializable{
 	
+	private static final long serialVersionUID = 5150400539222397910L;
 	private Integer id;
 	private User driver;
 	private String status;
@@ -19,6 +21,41 @@ public class Offer{
 	
 	public Offer() {
 
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == null) {
+			return false;
+		} else if (object == this) {
+			return true;
+		}
+		if (!(object instanceof Offer)) {
+			return false;
+		}
+		Offer offer = (Offer) object;
+		if (this.driver.equals(offer.driver) &&
+				this.placeFrom.equals(offer.placeFrom) &&
+				this.placeTo.equals(offer.placeTo) &&
+				this.customer.equals(offer.customer) &&
+				this.date.equals(offer.date) &&
+				this.maxPrice.equals(offer.maxPrice) &&
+				this.status.equals(offer.status)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + placeFrom.hashCode();
+		hash = 31 * hash + placeTo.hashCode();
+		hash = 31 * hash + customer.hashCode();
+		hash = 31 * hash + date.hashCode();
+		hash = 31 * hash + maxPrice.hashCode();
+		hash = 31 * hash + status.hashCode();
+		return hash;
 	}
 	
 	public Integer getId() {

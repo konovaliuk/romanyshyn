@@ -92,18 +92,19 @@ public class CustomerDao implements ICustomerDao {
 		try (Connection connection = ConnectionPool.getConnection()) {
 			PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_CUSTOMER_BY_ID);
 			st.setInt(1, id);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				int customerId = rs.getInt(CustomerCols.CUSTOMER_ID);
-				String firstName = rs.getString(CustomerCols.FIRST_NAME);
-				String lastName = rs.getString(CustomerCols.LAST_NAME);
-				String phone = rs.getString(CustomerCols.PHONE);
-				String email = rs.getString(CustomerCols.EMAIL);				
-				customer.setId(customerId);
-				customer.setFirstName(firstName);
-				customer.setLastName(lastName);
-				customer.setPhone(phone);
-				customer.setEmail(email);
+			try (ResultSet rs = st.executeQuery()) {
+				while (rs.next()) {
+					int customerId = rs.getInt(CustomerCols.CUSTOMER_ID);
+					String firstName = rs.getString(CustomerCols.FIRST_NAME);
+					String lastName = rs.getString(CustomerCols.LAST_NAME);
+					String phone = rs.getString(CustomerCols.PHONE);
+					String email = rs.getString(CustomerCols.EMAIL);				
+					customer.setId(customerId);
+					customer.setFirstName(firstName);
+					customer.setLastName(lastName);
+					customer.setPhone(phone);
+					customer.setEmail(email);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());
@@ -117,17 +118,18 @@ public class CustomerDao implements ICustomerDao {
 		try (Connection connection = ConnectionPool.getConnection()) {
 			PreparedStatement st = connection.prepareStatement(SQLQuery.FIND_CUSTOMER_BY_EMAIL);
 			st.setString(1, email);
-			ResultSet rs = st.executeQuery();
-			while (rs.next()) {
-				int customerId = rs.getInt(CustomerCols.CUSTOMER_ID);
-				String firstName = rs.getString(CustomerCols.FIRST_NAME);
-				String lastName = rs.getString(CustomerCols.LAST_NAME);
-				String phone = rs.getString(CustomerCols.PHONE);		
-				customer.setId(customerId);
-				customer.setFirstName(firstName);
-				customer.setLastName(lastName);
-				customer.setPhone(phone);
-				customer.setEmail(email);
+			try (ResultSet rs = st.executeQuery()) {
+				while (rs.next()) {
+					int customerId = rs.getInt(CustomerCols.CUSTOMER_ID);
+					String firstName = rs.getString(CustomerCols.FIRST_NAME);
+					String lastName = rs.getString(CustomerCols.LAST_NAME);
+					String phone = rs.getString(CustomerCols.PHONE);		
+					customer.setId(customerId);
+					customer.setFirstName(firstName);
+					customer.setLastName(lastName);
+					customer.setPhone(phone);
+					customer.setEmail(email);
+				}
 			}
 		} catch (SQLException ex) {
 			logger.error(ex.getMessage());

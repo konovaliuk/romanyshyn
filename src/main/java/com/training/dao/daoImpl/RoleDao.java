@@ -37,9 +37,9 @@ public class RoleDao  implements IRoleDao {
 	@Override
 	public List<Role> findAll() {
 		List<Role> roles = new ArrayList<>();
-		try (Connection connection = ConnectionPool.getConnection();){
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_ROLES);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_ROLES)) {
 			while (rs.next()) {
 				Role role = new Role();
 				int roleId = rs.getInt(RoleCols.ROLE_ID);
@@ -63,15 +63,16 @@ public class RoleDao  implements IRoleDao {
 	@Override
 	public Role findEntityById(Integer id) {
 		Role role = new Role();
-		try (Connection connection = ConnectionPool.getConnection();){
-			PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_ROLE_BY_ID);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_ROLE_BY_ID)) {
 			statement.setInt(1, id);
-			ResultSet rs = statement.executeQuery();
-			while (rs.next()) {				
-				int roleId = rs.getInt(RoleCols.ROLE_ID);
-				String name = rs.getString(RoleCols.NAME);
-				role.setName(name);
-				role.setId(roleId);		
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {				
+					int roleId = rs.getInt(RoleCols.ROLE_ID);
+					String name = rs.getString(RoleCols.NAME);
+					role.setName(name);
+					role.setId(roleId);		
+				}
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
@@ -83,8 +84,8 @@ public class RoleDao  implements IRoleDao {
 	public boolean delete(Integer id) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_ROLE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_ROLE)) {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -98,8 +99,8 @@ public class RoleDao  implements IRoleDao {
 	public boolean delete(Role role) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_ROLE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_ROLE)) {
 			st.setInt(1, role.getId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -113,8 +114,8 @@ public class RoleDao  implements IRoleDao {
 	public boolean create(Role role) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_ROLE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_ROLE)) {
 			st.setString(1, role.getName());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -127,8 +128,8 @@ public class RoleDao  implements IRoleDao {
 	
 	@Override
 	public Role update(Role role) {
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_ROLE);			
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_ROLE)) {		
 			st.setString(1, role.getName());
 			logger.info(st);
 		} catch (SQLException ex) {

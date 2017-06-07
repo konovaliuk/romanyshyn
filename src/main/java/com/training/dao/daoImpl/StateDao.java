@@ -37,9 +37,9 @@ public class StateDao implements IStateDao {
 	@Override
 	public List<State> findAll() {
 		List<State> states = new ArrayList<>();
-		try (Connection connection = ConnectionPool.getConnection();){
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_STATES);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_STATES)) {
 			while (rs.next()) {
 				State state = new State();				
 				int stateId = rs.getInt(StateCols.STATE_ID);
@@ -57,15 +57,16 @@ public class StateDao implements IStateDao {
 	@Override
 	public State findEntityById(Integer id) {
 		State state = new State();
-		try (Connection connection = ConnectionPool.getConnection();){
-			PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_STATE_BY_ID);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement statement = connection.prepareStatement(SQLQuery.FIND_STATE_BY_ID)) {
 			statement.setObject(1, id);
-			ResultSet rs = statement.executeQuery();
-			while (rs.next()) {				
-				int stateId = rs.getInt(StateCols.STATE_ID);
-				String name = rs.getString(StateCols.NAME);		
-				state.setName(name);
-				state.setId(stateId);				
+			try (ResultSet rs = statement.executeQuery()) {
+				while (rs.next()) {				
+					int stateId = rs.getInt(StateCols.STATE_ID);
+					String name = rs.getString(StateCols.NAME);		
+					state.setName(name);
+					state.setId(stateId);				
+				}
 			}
 		} catch (Exception ex) {
 			logger.error(ex.getMessage());
@@ -77,8 +78,8 @@ public class StateDao implements IStateDao {
 	public boolean delete(Integer id) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_STATE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_STATE)) {
 			st.setInt(1, id);
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -93,8 +94,8 @@ public class StateDao implements IStateDao {
 	public boolean delete(State state) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_STATE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.DELETE_STATE)) {
 			st.setInt(1, state.getId());
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -109,8 +110,8 @@ public class StateDao implements IStateDao {
 	public boolean create(State state) {
 		boolean result = false;
 		int rowsAffected = 0;
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_STATE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.INSERT_STATE)) {
 			st.setString(1, state.getName());			
 			rowsAffected = st.executeUpdate();
 			result = (rowsAffected > 0) ? true : false;
@@ -123,8 +124,8 @@ public class StateDao implements IStateDao {
 
 	@Override
 	public State update(State state) {
-		try (Connection connection = ConnectionPool.getConnection()) {
-			PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_STATE);
+		try (Connection connection = ConnectionPool.getConnection();
+				PreparedStatement st = connection.prepareStatement(SQLQuery.UPDATE_STATE)) {
 			st.setString(1, state.getName());
 			st.executeUpdate();
 			logger.info(st);
@@ -137,9 +138,9 @@ public class StateDao implements IStateDao {
 	@Override
 	public Map<Integer, State> findAllMap() {
 		Map<Integer, State> states = new LinkedHashMap<>();
-		try (Connection connection = ConnectionPool.getConnection();){
-			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_STATES);
+		try (Connection connection = ConnectionPool.getConnection();
+				Statement statement = connection.createStatement();
+				ResultSet rs = statement.executeQuery(SQLQuery.SELECT_ALL_STATES)) {
 			while (rs.next()) {
 				State state = new State();				
 				int stateId = rs.getInt(StateCols.STATE_ID);

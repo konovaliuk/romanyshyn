@@ -1,7 +1,10 @@
 package com.training.entities;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable {
 	
+	private static final long serialVersionUID = 7305749059090761871L;
 	private String firstName;
 	private String lastName;
 	private String phone;
@@ -10,6 +13,36 @@ public class Customer {
 	
 	public Customer() {
 		
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if (object == null) {
+			return false;
+		} else if (object == this) {
+			return true;
+		}
+		if (!(object instanceof Customer)) {
+			return false;
+		}
+		Customer customer = (Customer) object;
+		if (this.firstName.equals(customer.firstName) &&
+				this.lastName.equals(customer.lastName) &&
+				this.phone.equals(customer.phone) &&
+				this.email.equals(customer.email)) {
+			return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		int hash = 17;
+		hash = 31 * hash + firstName.hashCode();
+		hash = 31 * hash + lastName.hashCode();
+		hash = 31 * hash + phone.hashCode();
+		hash = 31 * hash + email.hashCode();
+		return hash;
 	}
 	
 	public String getFirstName() {
